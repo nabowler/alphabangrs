@@ -19,20 +19,25 @@ const QUIT :&str = "quit";
 fn main() {
     let quit_string = String::from(QUIT);
 
-    let fonts = find_folder::Search::ParentsThenKids(2, 3)
-        .for_folder(FONT_FAMILY).unwrap();
+//    let fonts = find_folder::Search::ParentsThenKids(2, 3)
+//        .for_folder(FONT_FAMILY).unwrap();
+    //    println!("{:?}", fonts);
+//    let ref font = fonts.join(TYPE_FACE);
 
-//    println!("{:?}", fonts);
-    let ref font = fonts.join(TYPE_FACE);
+    let font_bytes :&[u8] = include_bytes!("../fonts/firaSans/FiraSans-Bold.ttf");
 
     let mut window: PistonWindow =
         WindowSettings::new("Hello Piston!", [WIDTH, HEIGHT])
+            .opengl(OpenGL::V3_3)
             .decorated(true)
             .fullscreen(true)
+            .srgb(false)
             .samples(2)
             .exit_on_esc(false).build().unwrap();
     let factory = window.factory.clone();
-    let mut glyphs = Glyphs::new(font, factory, TextureSettings::new()).unwrap();
+    let mut glyphs = Glyphs::from_bytes(&font_bytes, factory, TextureSettings::new()).unwrap();
+//    let mut glyphs = Glyphs::new(font_bytes, factory, TextureSettings::new()).unwrap();
+
 
     window.set_max_fps(60);
     window.set_capture_cursor(true);
@@ -69,7 +74,7 @@ fn main() {
                 &mut glyphs,
                 &c.draw_state,
                 transform, g
-            )/*.unwrap()*/;
+            ).unwrap();
         });
     }
 }
