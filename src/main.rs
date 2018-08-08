@@ -3,6 +3,7 @@ extern crate find_folder;
 extern crate rand;
 
 use piston_window::*;
+use piston_window::math::Vec2d;
 use rand::prelude::random;
 
 
@@ -67,7 +68,8 @@ fn main() {
         }
 
         window.draw_2d(&e, |c, g| {
-            let transform = c.transform.trans((WIDTH as f64 / 2.0) - ((text.len() as f64 / 2.0) * (FONT_SIZE  as f64 / 2.0)) , HEIGHT as f64 / 2.0);
+            let view_size :Vec2d = c.get_view_size();
+            let transform = c.transform.trans((view_size[0] as f64 / 2.0) - ((text.len() as f64 / 2.0) * (FONT_SIZE  as f64 / 2.0)) , view_size[1] as f64 / 2.0);
             clear([1.0, 1.0, 1.0, 1.0], g);
             text::Text::new_color(color, FONT_SIZE).draw(
                 text.as_ref(),
