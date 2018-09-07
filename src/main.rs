@@ -9,7 +9,7 @@ use rand::prelude::random;
 
 const FONT_FAMILY :&str = "firaSans";
 const TYPE_FACE :&str = "FiraSans-Bold.ttf";
-const FONT_SIZE :piston_window::types::FontSize = 128;
+const FONT_SIZE :piston_window::types::FontSize = 256;
 
 const WIDTH :u32 = 1920;
 const HEIGHT :u32 = 1080;
@@ -28,7 +28,7 @@ fn main() {
     let font_bytes :&[u8] = include_bytes!("../fonts/firaSans/FiraSans-Bold.ttf");
 
     let mut window: PistonWindow =
-        WindowSettings::new("Hello Piston!", [WIDTH, HEIGHT])
+        WindowSettings::new("Alphabangrs", [WIDTH, HEIGHT])
             .opengl(OpenGL::V3_3)
             .decorated(true)
             .fullscreen(true)
