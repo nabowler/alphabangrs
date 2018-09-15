@@ -1,15 +1,22 @@
 extern crate piston_window;
 extern crate find_folder;
 extern crate rand;
+extern crate rodio;
+extern crate alphabangrs;
 
 use piston_window::*;
 use piston_window::math::Vec2d;
 use rand::prelude::random;
+use rand::thread_rng;
+use rand::Rng;
+use rodio::{Sink, Source};
+use std::io::BufReader;
+use alphabangrs::Sound;
 
 
 const FONT_FAMILY :&str = "firaSans";
 const TYPE_FACE :&str = "FiraSans-Bold.ttf";
-const FONT_SIZE :piston_window::types::FontSize = 256;
+const FONT_SIZE :piston_window::types::FontSize = 128;
 
 const WIDTH :u32 = 1920;
 const HEIGHT :u32 = 1080;
@@ -25,7 +32,16 @@ fn main() {
     //    println!("{:?}", fonts);
 //    let ref font = fonts.join(TYPE_FACE);
 
+    let device = rodio::default_output_device().unwrap();
+    let sink :Sink = rodio::Sink::new(&device);
+
     let font_bytes :&[u8] = include_bytes!("../fonts/firaSans/FiraSans-Bold.ttf");
+    let giggle_bytes :&[u8] = include_bytes!("../sounds/babysmash/babygigl2.wav");
+    let sound = Sound::load(giggle_bytes).unwrap();
+//    let file = std::fs::File::open("../sounds/babysmash/babygigl2.wav").unwrap();
+
+//    let mut sounds_vec :Vec<std::fs::File> = Vec::new();
+//    sounds_vec.push(file);
 
     let mut window: PistonWindow =
         WindowSettings::new("Alphabangrs", [WIDTH, HEIGHT])
@@ -64,6 +80,12 @@ fn main() {
                     typed.clear();
                 }
                 color = [random(), random(), random(), 1.0];
+                if sink.empty() {
+//                    let sound :&std::fs::File = sounds_vec.get(thread_rng().gen_range(0, sounds_vec.len())).unwrap();
+//                    sink.append(rodio::Decoder::new(BufReader::new(std::fs::File::open("sounds/babysmash/babygigl2.wav").unwrap())).unwrap());
+//                    sink.append(rodio::Decoder::new(BufReader::new(giggle_bytes)).unwrap());
+                    sink.append(sound.decoder());
+                }
             }
         }
 
