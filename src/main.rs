@@ -27,21 +27,22 @@ const QUIT :&str = "quit";
 fn main() {
     let quit_string = String::from(QUIT);
 
-//    let fonts = find_folder::Search::ParentsThenKids(2, 3)
-//        .for_folder(FONT_FAMILY).unwrap();
-    //    println!("{:?}", fonts);
-//    let ref font = fonts.join(TYPE_FACE);
-
     let device = rodio::default_output_device().unwrap();
     let sink :Sink = rodio::Sink::new(&device);
 
-    let font_bytes :&[u8] = include_bytes!("../fonts/firaSans/FiraSans-Bold.ttf");
-    let giggle_bytes :&[u8] = include_bytes!("../sounds/babysmash/babygigl2.wav");
-    let sound = Sound::load(giggle_bytes).unwrap();
-//    let file = std::fs::File::open("../sounds/babysmash/babygigl2.wav").unwrap();
+    let mut sounds_vec :Vec<Sound> = Vec::new();
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/babygigl2.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/babylaugh.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ccgiggle.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/giggle.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/laughingmice.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/rising.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/scooby2.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/smallbumblebee.wav")).unwrap());
 
-//    let mut sounds_vec :Vec<std::fs::File> = Vec::new();
-//    sounds_vec.push(file);
+
+    let font_bytes :&[u8] = include_bytes!("../fonts/firaSans/FiraSans-Bold.ttf");
+
 
     let mut window: PistonWindow =
         WindowSettings::new("Alphabangrs", [WIDTH, HEIGHT])
@@ -53,7 +54,6 @@ fn main() {
             .exit_on_esc(false).build().unwrap();
     let factory = window.factory.clone();
     let mut glyphs = Glyphs::from_bytes(&font_bytes, factory, TextureSettings::new()).unwrap();
-//    let mut glyphs = Glyphs::new(font_bytes, factory, TextureSettings::new()).unwrap();
 
 
     window.set_max_fps(60);
@@ -80,10 +80,10 @@ fn main() {
                     typed.clear();
                 }
                 color = [random(), random(), random(), 1.0];
+
+                // play a random sound
                 if sink.empty() {
-//                    let sound :&std::fs::File = sounds_vec.get(thread_rng().gen_range(0, sounds_vec.len())).unwrap();
-//                    sink.append(rodio::Decoder::new(BufReader::new(std::fs::File::open("sounds/babysmash/babygigl2.wav").unwrap())).unwrap());
-//                    sink.append(rodio::Decoder::new(BufReader::new(giggle_bytes)).unwrap());
+                    let sound :&Sound = sounds_vec.get(thread_rng().gen_range(0, sounds_vec.len())).unwrap();
                     sink.append(sound.decoder());
                 }
             }
