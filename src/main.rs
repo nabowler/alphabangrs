@@ -31,14 +31,14 @@ fn main() {
     let sink :Sink = rodio::Sink::new(&device);
 
     let mut sounds_vec :Vec<Sound> = Vec::new();
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/babygigl2.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/babylaugh.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ccgiggle.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/giggle.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/laughingmice.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/rising.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/scooby2.wav")).unwrap());
-    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/smallbumblebee.wav")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/babygigl2.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/babylaugh.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/ccgiggle.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/giggle.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/laughingmice.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/rising.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/scooby2.ogg")).unwrap());
+    sounds_vec.push(Sound::load(include_bytes!("../sounds/babysmash/ogg/smallbumblebee.ogg")).unwrap());
 
 
     let font_bytes :&[u8] = include_bytes!("../fonts/firaSans/FiraSans-Bold.ttf");
